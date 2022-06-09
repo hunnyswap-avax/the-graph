@@ -1,0 +1,13 @@
+{
+  "name": "blocks",
+  "license": "UNLICENSED",
+  "files": [
+    "generated"
+  ],
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --product hosted-service hunnyswap-avax/blocks-avalanche",    
+    "prepare:fantom": "mustache ../../config/fantom.json subgraph.yaml > subgraph.yaml"
+  }
+}
