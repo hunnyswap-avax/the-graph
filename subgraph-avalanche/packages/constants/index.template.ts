@@ -93,7 +93,7 @@ export const USDC_ADDRESS = Address.fromString(
 export const NATIVE = Address.fromString(
   "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
 )
-
+export const TRADING_CHEF_ADDRESS = Address.fromString("0x84a301c93c528079a8c149cc89c9eaa0630f445d")
 export const USDC_AVAX_PAIR = "0xb02972a9fd0f9d3fddd6e8885fdea380ff304473"
 
 export const USDT_AVAX_PAIR = "0x86f721db310be07f45faff6f9162421be88548d1"

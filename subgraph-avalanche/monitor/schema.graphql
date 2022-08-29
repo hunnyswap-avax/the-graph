@@ -1,0 +1,30 @@
+# TradingChef
+type TradingChef @entity {
+  # Address
+  id: ID!
+  totalRewardsClaimed: BigDecimal!
+  timestamp: BigInt!
+  lastClaimed: Transaction!
+}
+# User
+type User @entity {
+  # Address
+  id: ID!
+  totalRewardsClaimed: BigDecimal!
+  lastClaimed: Transaction!
+}
+
+# Bundle
+type Bundle @entity {
+  id: ID!
+  avaxPrice: BigDecimal! # price of ETH usd
+}
+
+# transaction
+type Transaction @entity {
+  # transaction hash
+  id: ID!
+  blockNumber: BigInt!
+  amountInXOXO: BigDecimal!
+  timestamp: BigInt!
+}

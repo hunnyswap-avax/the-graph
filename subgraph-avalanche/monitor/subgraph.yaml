@@ -1,0 +1,33 @@
+specVersion: 0.0.2
+description: Hunnyswap Monitor
+repository: https://github.com/hunnyswap-avax/the-graph/hunnyswap-avax/hunnyswap-monitor
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: TradingChef
+    network: avalanche
+    source:
+      address: "0x84a301c93c528079a8c149cc89c9eaa0630f445d"
+      abi: ERC20
+      startBlock: 15665500
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/tradingChef.ts
+      entities:
+        - TradingChef
+        - Bundle
+        - User
+        - Transaction
+      abis:
+        - name: TradingChef
+          file: ./abis/TradingChef.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: AggregatorV3
+          file: ./abis/AggregatorV3.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: onTransfer
