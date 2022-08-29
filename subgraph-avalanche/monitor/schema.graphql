@@ -3,6 +3,8 @@ type TradingChef @entity {
   # Address
   id: ID!
   totalRewardsClaimed: BigDecimal!
+  tokenSymbol: String!
+  tokenAddress: String!
   timestamp: BigInt!
   lastClaimed: Transaction!
 }
