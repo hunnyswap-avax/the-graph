@@ -11,11 +11,11 @@ export function getTradingChef(address:Address = TRADING_CHEF_ADDRESS): TradingC
 
   // If no user, create one
   if (tradingChef === null) {
-    const tradingChef = new TradingChef(address.toHex())
+    tradingChef = new TradingChef(address.toHex())
     tradingChef.totalRewardsClaimed = BIG_DECIMAL_ZERO
     tradingChef.lastClaimed = ADDRESS_ZERO.toHex()
     tradingChef.timestamp = BIG_INT_ZERO
-    tradingChef.tokenAddress = XOXO_TOKEN_ADDRESS.toHex()
+    tradingChef.tokenAddress = XOXO_TOKEN_ADDRESS
     tradingChef.tokenSymbol = getSymbol(XOXO_TOKEN_ADDRESS)
     tradingChef.save() 
   }

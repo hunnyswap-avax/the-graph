@@ -4,7 +4,7 @@ type TradingChef @entity {
   id: ID!
   totalRewardsClaimed: BigDecimal!
   tokenSymbol: String!
-  tokenAddress: String!
+  tokenAddress: Bytes!
   timestamp: BigInt!
   lastClaimed: Transaction!
 }
@@ -26,6 +26,8 @@ type Bundle @entity {
 type Transaction @entity {
   # transaction hash
   id: ID!
+  from: Bytes!
+  to: User!
   blockNumber: BigInt!
   amountInXOXO: BigDecimal!
   timestamp: BigInt!

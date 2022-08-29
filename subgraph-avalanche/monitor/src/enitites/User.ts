@@ -9,7 +9,7 @@ export function getUser(address: Address): User {
 
   // If no user, create one
   if (user === null) {
-    const user = new User(address.toHex())
+    user = new User(address.toHex())
     user.totalRewardsClaimed = BIG_DECIMAL_ZERO
     user.lastClaimed = ADDRESS_ZERO.toHex()
     user.save() 

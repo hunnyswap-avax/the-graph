@@ -13,14 +13,15 @@ export function onTransfer(event: TransferEvent): void {
   bundle.avaxPrice = getAvaxPrice()
     bundle.save()
   // We returned null for some reason, we should silently bail without creating this pair
-  if (event.params.from.notEqual(TRADING_CHEF_ADDRESS)) {
+  if (event.params.from.toHex().toLowerCase() != TRADING_CHEF_ADDRESS.toHex().toLowerCase()) {
     return
-    }
-    const amountClaimed = event.params.value.toBigDecimal().div(BIG_DECIMAL_1E18)
-    let transaction = getTransaction(event.block.hash)
-    transaction.blockNumber = event.block.number
+  }
+    const amountClaimed = event.params.value.toBigDecimal().div(BIG_DECIMAL_1E18)  
+  let transaction = getTransaction(event.transaction.hash.toHex())
+   transaction.blockNumber = event.block.number
     transaction.amountInXOXO = amountClaimed
     transaction.timestamp = event.block.timestamp
+    transaction.to = event.params.to.toHex()
     let tradingChef = getTradingChef()
     tradingChef.lastClaimed = transaction.id
     tradingChef.timestamp = event.block.timestamp

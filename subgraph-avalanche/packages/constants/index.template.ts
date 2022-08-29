@@ -69,7 +69,7 @@ export const FACTORY_ADDRESS = Address.fromString(
 )
 
 export const XOXO_TOKEN_ADDRESS = Address.fromString(
-  "0xf9430aD8da4af7fb4091C57FE523af1236FF5b2C"
+  "0xf9430ad8da4af7fb4091c57fe523af1236ff5b2c"
 )
 
 export const AVAX_USD_DATA_FEEDS_ADDRESS = Address.fromString(
