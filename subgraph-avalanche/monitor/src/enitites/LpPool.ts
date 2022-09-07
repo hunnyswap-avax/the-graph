@@ -17,6 +17,7 @@ export function getLpPool(address:Address): LpPool {
     lpPool.token0Symbol = "NULL"
     lpPool.token1Symbol = "NULL" 
     lpPool.pid = BIG_INT_ZERO 
+    lpPool.recentTransactionMasterChef = ADDRESS_ZERO.toHex();
     lpPool.save() 
   }
 

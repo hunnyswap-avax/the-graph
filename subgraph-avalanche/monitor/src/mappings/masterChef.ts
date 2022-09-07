@@ -1,13 +1,28 @@
-import { Address } from '@graphprotocol/graph-ts';
-import { ADDRESS_ZERO, BIG_DECIMAL_1E18, BIG_DECIMAL_ZERO, BIG_INT_ONE } from '../../../packages/constants/index.template';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
+import { ADDRESS_ZERO, BIG_DECIMAL_1E18, BIG_DECIMAL_ZERO, BIG_INT_ONE, MASTER_CHEF_ADDRESS } from '../../../packages/constants/index.template';
 import { Deposit as DepositEvent,
     Withdraw as WithdrawEvent,
 } from '../../generated/MasterChef/MasterChef'
-import { LpPool, MasterChef } from '../../generated/schema';
+import {  MasterChef } from '../../generated/schema';
+import { MasterChef as MasterChefContract } from '../../generated/MasterChef/MasterChef';
 import { Transfer as TransferEvent
 } from '../../generated/templates/LpToken/LpToken'
 import {  getMasterChef, getMasterChefFactory, getTransactionMasterChef, getUserMasterChef } from '../enitites'
 
+export function getPoolAddressByPid(number: BigInt): Address {
+    const contract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
+  
+    // try types uint8 for decimals
+  
+    const decimalResult = contract.try_poolInfo(number)
+  
+    if (!decimalResult.reverted) {
+        let decimalValue = decimalResult.value.value0
+        return decimalValue
+    }
+  
+    return ADDRESS_ZERO
+  }
 export function onDeposit(event: DepositEvent): void {
   getMasterChefFactory();
   let masterChef = getMasterChef();
@@ -25,6 +40,13 @@ export function onDeposit(event: DepositEvent): void {
   transactionMasterChef.timestamp = event.block.timestamp;
   masterChef.recentTimestamp = event.block.timestamp;
   masterChef.recentTransactionMasterChef = transactionMasterChef.id;
+  const lpToken = getPoolAddressByPid(event.params.pid);
+  if (lpToken.notEqual(ADDRESS_ZERO)) {
+    transactionMasterChef.lpToken = lpToken.toHex();
+  }
+  transactionMasterChef.save();
+  userMasterChef.save();
+  masterChef.save();
 
 }
 export function onWithdraw(event: WithdrawEvent): void {
@@ -44,11 +66,18 @@ export function onWithdraw(event: WithdrawEvent): void {
     transactionMasterChef.timestamp = event.block.timestamp;
     masterChef.recentTimestamp = event.block.timestamp;
     masterChef.recentTransactionMasterChef = transactionMasterChef.id;
+    const lpToken = getPoolAddressByPid(event.params.pid);
+    if (lpToken.notEqual(ADDRESS_ZERO)) {
+        transactionMasterChef.lpToken = lpToken.toHex();
+    }
+    transactionMasterChef.save();
+    userMasterChef.save();
+    masterChef.save();
 }
 
 export function onTransfer(event: TransferEvent): void {
     getMasterChefFactory();
-    const masterChef = MasterChef.load(event.address.toHex());
+    let masterChef = MasterChef.load(event.address.toHex());
     if(masterChef === null) {
         return
     }
@@ -62,4 +91,7 @@ export function onTransfer(event: TransferEvent): void {
     transactionMasterChef.timestamp = event.block.timestamp;
     masterChef.recentTimestamp = event.block.timestamp;
     masterChef.recentTransactionMasterChef = transactionMasterChef.id;
+    transactionMasterChef.save();
+    userMasterChef.save();
+    masterChef.save();
 }

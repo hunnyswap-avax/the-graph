@@ -49,6 +49,7 @@ type TransactionMasterChef @entity {
   # Address
   id: ID!
   masterChef: MasterChef!
+  lpToken: LpPool!
   type: MasterChefType!
   lpTokenAmount: BigDecimal!
   token0Amount: BigDecimal!

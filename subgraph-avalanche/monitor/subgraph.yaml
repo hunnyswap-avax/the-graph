@@ -87,6 +87,8 @@ dataSources:
           file: ../packages/abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
           file: ../packages/abis/ERC20NameBytes.json
+        - name: LpToken
+          file: ./abis/LpToken.json
       eventHandlers:
         - event: Withdraw(indexed address,indexed uint256,uint256)
           handler: onWithdraw
@@ -118,6 +120,8 @@ templates:
           file: ../packages/abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
           file: ../packages/abis/ERC20NameBytes.json
+        - name: LpToken
+          file: ./abis/LpToken.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: onTransfer
