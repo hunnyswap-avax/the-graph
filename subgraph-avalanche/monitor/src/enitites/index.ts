@@ -13,4 +13,12 @@ export * from './TradingChef'
 // export * from './transaction'
 
 // User
-export * from './User'
+export * from './MasterChef'
+// User
+export * from './MasterChefFactory'
+// User
+export * from './UserMasterChef'
+// User
+export * from './TransactionMasterChef'
+// User
+export * from './LpPool'

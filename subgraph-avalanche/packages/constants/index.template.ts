@@ -95,7 +95,8 @@ export const NATIVE = Address.fromString(
 )
 export const TRADING_CHEF_ADDRESS = Address.fromString("0x84a301c93c528079a8c149cc89c9eaa0630f445d")
 export const USDC_AVAX_PAIR = "0xb02972a9fd0f9d3fddd6e8885fdea380ff304473"
-
+export const MASTER_CHEF_FACTORY_ADDRESS = Address.fromString("0x0c6a0061f9d0afb30152b8761a273786e51bec6d")
+export const MASTER_CHEF_ADDRESS = Address.fromString("0xdd18d18727bfe6b863387d48872eb4c1b682deca")
 export const USDT_AVAX_PAIR = "0x86f721db310be07f45faff6f9162421be88548d1"
 export const USDTe_AVAX_PAIR = "0x53bebbaf1f98aafd787d9bbda1a7713f46df1f8b"
 

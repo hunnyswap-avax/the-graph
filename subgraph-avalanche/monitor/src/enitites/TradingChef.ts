@@ -1,10 +1,9 @@
-import { Address } from '@graphprotocol/graph-ts'
+import { Address, BigInt } from '@graphprotocol/graph-ts'
 import { ADDRESS_ZERO, BIG_DECIMAL_ZERO, BIG_INT_ZERO, NULL_CALL_RESULT_VALUE, TRADING_CHEF_ADDRESS, XOXO_TOKEN_ADDRESS } from '../../../packages/constants/index.template'
 
 import { TradingChef } from '../../generated/schema'
-import { ERC20 } from '../../generated/TradingChef/ERC20'
-import { ERC20SymbolBytes } from '../../generated/TradingChef/ERC20SymbolBytes'
-import { ERC20NameBytes } from '../../generated/TradingChef/ERC20NameBytes'
+import { ERC20 } from '../../generated/MasterChef/ERC20'
+import { ERC20SymbolBytes } from '../../generated/MasterChef/ERC20SymbolBytes' 
 
 export function getTradingChef(address:Address = TRADING_CHEF_ADDRESS): TradingChef {
   let tradingChef = TradingChef.load(address.toHex())
@@ -44,4 +43,19 @@ export function getSymbol(address: Address): string {
   }
 
   return symbolValue
+}
+
+export function getDecimals(address: Address): BigInt {
+  const contract = ERC20.bind(address)
+
+  // try types uint8 for decimals
+
+  const decimalResult = contract.try_decimals()
+
+  if (!decimalResult.reverted) {
+      let decimalValue = decimalResult.value
+      return BigInt.fromI32(decimalValue)
+  }
+
+  return BigInt.zero()
 }

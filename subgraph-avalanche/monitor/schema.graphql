@@ -1,3 +1,62 @@
+enum MasterChefType {
+  DEPOSIT
+  WITHDRAW
+  HARVEST
+}
+# MasterChefFactory
+type MasterChefFactory @entity {
+  # Address
+  id: ID!
+  usersMasterChefs: [UserMasterChef!]! @derivedFrom(field: "masterChefFactory")
+  masterChefs: [MasterChef!]! @derivedFrom(field: "masterChefFactory")
+}
+# MasterChef
+type MasterChef @entity {
+  # Address
+  id: ID!
+  masterChefFactory: MasterChefFactory!
+  lpPools: [LpPool!]! @derivedFrom(field: "masterChef")
+  recentTimestamp: BigInt!
+  recentTransactionMasterChef: TransactionMasterChef!
+} 
+#LpPool
+type LpPool @entity {
+  # Address
+  id: ID!
+  masterChef: MasterChef!
+  isInit: Boolean!
+  name: String!
+  token0: Bytes!
+  token1: Bytes!
+  token0Symbol: String!
+  token1Symbol: String!
+  pid: BigInt!
+  recentTransactionMasterChef: TransactionMasterChef!
+}
+
+# UserMasterChef
+type UserMasterChef @entity {
+  # Address
+  id: ID!
+  masterChefFactory: MasterChefFactory!
+  totalDeposited: BigDecimal!
+  totalWithdrawn: BigDecimal!
+  totalHarvest: BigDecimal!
+  recentTransactionMasterChef: TransactionMasterChef!
+}
+# Deposit and Withdraw and Harvest
+type TransactionMasterChef @entity {
+  # Address
+  id: ID!
+  masterChef: MasterChef!
+  type: MasterChefType!
+  lpTokenAmount: BigDecimal!
+  token0Amount: BigDecimal!
+  token1Amount: BigDecimal!
+  harvestAmount: BigDecimal!
+  userMasterChef: UserMasterChef!
+  timestamp: BigInt!
+}
 # TradingChef
 type TradingChef @entity {
   # Address
@@ -22,7 +81,7 @@ type Bundle @entity {
   avaxPrice: BigDecimal! # price of ETH usd
 }
 
-# transaction
+# transaction of TradingChef
 type Transaction @entity {
   # transaction hash
   id: ID!
