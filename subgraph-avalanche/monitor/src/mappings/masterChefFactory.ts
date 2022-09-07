@@ -1,6 +1,6 @@
 import { PairCreated as PairCreatedEvent } from '../../generated/MasterChefFactory/MasterChefFactory'
 import { getLpPool, getMasterChef, getMasterChefFactory, getSymbol } from '../enitites'
-
+import { LpToken } from '../../generated/templates';
 export function onPairCreated(event: PairCreatedEvent): void {
   getMasterChefFactory();
   let masterChef = getMasterChef();
@@ -15,5 +15,6 @@ export function onPairCreated(event: PairCreatedEvent): void {
   lpPool.token1Symbol = token1;
   lpPool.name = token0 + "-" + token1;
   lpPool.pid = event.params.param3;
+  LpToken.create(event.params.pair)
   lpPool.save()
 }

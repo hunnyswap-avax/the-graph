@@ -96,7 +96,7 @@ dataSources:
           handler: onDeposit
 templates:
   - kind: ethereum/contract
-    name: MasterChef
+    name: LpToken
     network: avalanche
     source:
       abi: LpToken
@@ -104,8 +104,9 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/mappings/masterChef.ts
+      file: ./src/mappings/templates.ts
       entities:
+        - MasterChef
         - LpPool
         - UserMasterChef
         - TransactionMasterChef
@@ -114,14 +115,6 @@ templates:
           file: ./abis/LpToken.json
         - name: AggregatorV3
           file: ./abis/AggregatorV3.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20SymbolBytes
-          file: ../packages/abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ../packages/abis/ERC20NameBytes.json
-        - name: LpToken
-          file: ./abis/LpToken.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
-          handler: onTransfer
+          handler: onTransferMasterChef

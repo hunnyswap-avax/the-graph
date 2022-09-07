@@ -1,4 +1,5 @@
 enum MasterChefType {
+  NONE
   DEPOSIT
   WITHDRAW
   HARVEST
